@@ -1,0 +1,5 @@
+web:
+  build: web
+  tty: true
+  ports:
+    - 8081:5000
