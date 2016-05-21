@@ -1,4 +1,3 @@
-docker-compose.yml 
 master:
   ports:
   - 8090:8080/tcp
@@ -22,4 +21,12 @@ master:
   log_opt: {}
   image: blacklabelops/jenkins:alpine
   privileged: true
+  net: host
+
+slave:
+  labels:
+    com.blacklabelops.applications: java maven gradle
+    com.blacklabelops.description: Jenkins Swarm JDK-8 Slave
+    com.blacklabelops.service: slave
+  image: blacklabelops/swarm-jdk8
   net: host
