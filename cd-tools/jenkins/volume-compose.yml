@@ -1,0 +1,16 @@
+jenkinslogs:
+  labels:
+    io.rancher.container.start_once: 'true'
+  command:
+  - /bin/true
+  image: blacklabelops/jenkins:alpine
+  volumes:
+  - jenkinslogs:/var/log
+jenkinsdata:
+  labels:
+    io.rancher.container.start_once: 'true'
+  command:
+  - /bin/true
+  image: blacklabelops/jenkins:alpine
+  volumes:
+  - jenkinsdata:/jenkins
