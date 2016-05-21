@@ -1,0 +1,25 @@
+docker-compose.yml 
+master:
+  ports:
+  - 8090:8080/tcp
+  environment:
+    '# JENKINS_CERTIFICATE_DNAME': CN=SBleul,OU=Blacklabelops,O=blacklabelops.com,L=Munich,S=Bavaria,C=D
+    '# JENKINS_KEYSTORE_PASSWORD': swordfish
+    JAVA_VM_PARAMETERS: -Xmx1024m -Xms512m
+    JENKINS_MASTER_EXECUTORS: '0'
+    JENKINS_PLUGINS: swarm
+    JENKINS_SLAVEPORT: '8'
+    httpPort: '8090'
+  external_links:
+  - 'vol1/jenkinslogs:'
+  - 'vol1/jenkinsdata:'
+  log_driver: ''
+  labels:
+    com.blacklabelops.description: Jenkins Continuous Integration System
+    com.blacklabelops.service: jenkins-master
+    io.rancher.container.dns: 'true'
+  tty: true
+  log_opt: {}
+  image: blacklabelops/jenkins:alpine
+  privileged: true
+  net: host
