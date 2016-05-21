@@ -1,17 +1,40 @@
-sonarqube:
-  #image: "redsparkrp/sonarqube:5.1"
-  build: "5.1.2"
+sonar:
   ports:
-   - "80:9000"
-   - "5432:5432"
+   - "9000:9000"
+  labels:
+    io.rancher.sidekicks: plugins
+  image: sonarqube
+  links:
+   - db:dbsonar
   environment:
-   - SONARQUBE_JDBC_URL=jdbc:postgresql://localhost:5432/sonar
+   - SONARQUBE_JDBC_URL=jdbc:postgresql://dbsonar:5432/sonar
+  volumes_from:
+  - plugins
+plugins:
+  labels:
+    io.rancher.container.start_once: 'true'
+  image: sonarqube
+  volumes:
+   - /opt/sonarqube/extensions
+   - /opt/sonarqube/lib/bundled-plugins
+  command: /bin/true
+
 
 db:
+  labels:
+    io.rancher.sidekicks: datadb
   image: postgres
-  net: container:sonarqube
-  volumes_from: 
-    - dbdata
   environment:
    - POSTGRES_USER=sonar
    - POSTGRES_PASSWORD=sonar
+  volumes_from:
+    - datadb
+
+datadb:
+  labels:
+    io.rancher.container.start_once: 'true'
+  image: postgres
+  volumes:
+    - /var/lib/postgresql
+  command: /bin/true
+
