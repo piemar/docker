@@ -1,0 +1,17 @@
+plugins:
+  labels:
+    io.rancher.container.start_once: 'true'
+  command:
+  - /bin/true
+  image: sonarqube
+  volumes:
+  - /opt/sonarqube/extensions:/opt/sonarqube/extensions
+  - /opt/sonarqube/lib/bundled-plugins:/opt/sonarqube/lib/bundled-plugins
+datadb:
+  labels:
+    io.rancher.container.start_once: 'true'
+  command:
+  - /bin/true
+  image: postgres
+  volumes:
+  - /var/lib/postgresql:/var/lib/postgresql
